@@ -4,14 +4,19 @@
   content: |
 
     ```bash
+    (
+    tz=$(cat /etc/timezone)       # or some other tz database name
+    confpath=$HOME/HomeAssistant  # for example
+    
     docker run -d \
       --name homeassistant \
       --privileged \
       --restart=unless-stopped \
-      -e TZ=MY_TIME_ZONE \
-      -v /PATH_TO_YOUR_CONFIG:/config \
+      -e TZ=$tz \
+      -v $confpath:/config \
       --network=host \
       {{ site.installation.container }}:{{ include.tag | default: 'stable' }}
+    )
     ```
 
 - title: Update
@@ -34,14 +39,19 @@
 
     ```bash
     # finally, start a new one
+    (
+    tz=$(cat /etc/timezone)       # or some other tz database name
+    confpath=$HOME/HomeAssistant  # for example
+    
     docker run -d \
       --name homeassistant \
       --restart=unless-stopped \
       --privileged \
-      -e TZ=MY_TIME_ZONE \
-      -v /PATH_TO_YOUR_CONFIG:/config \
+      -e TZ=$tz \
+      -v $confpath:/config \
       --network=host \
       {{ site.installation.container }}:{{ include.tag | default: 'stable' }}
+    )
     ```
 
 {% endtabbed_block %}
